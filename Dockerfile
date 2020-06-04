@@ -1,4 +1,4 @@
-FROM centos
+FROM centos:7
 
 LABEL io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" \
       io.s2i.scripts-url="image:///usr/libexec/s2i"
