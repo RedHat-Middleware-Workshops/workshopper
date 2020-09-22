@@ -15,7 +15,8 @@
 
 <script type="text/javascript">
 function gowithuser() {
-    window.location.search = ('&userid=' + document.getElementById('useridfield').value);
+    window.location.search = ('&userid=' + document.getElementById('useridfield').value + '&guid=' +
+      document.getElementById('guidfield').value);
 }
 function recycle() {
   window.location.search = ('&userid=reset');
@@ -37,11 +38,13 @@ function recycle() {
       <% if !session[:userid] || session[:userid].strip == "" %>
         <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i style="color: orange;" class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
         <form action="javascript:void(0);" onsubmit="gowithuser();">
-          <input size="40" id="useridfield" type="text" placeholder = "Enter User ID (e.g. user2)">
+          <input required size="40" id="useridfield" type="text" placeholder = "Enter User ID (e.g. foo-redhat.com)">
+          <input required size="20" id="guidfield" type="text" placeholder = "Enter GUID (e.g. ec4b)">
+          <input type="submit" style="display:none">
         </form>
       <% else %>
         <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">|</span>
-        <span class="navbar-text">User ID: <%= session[:userid] %></span>
+        <span class="navbar-text">User ID: <%= session[:userid] %>&nbsp; GUID: <%= session[:guid] %></span>
         <span class="navbar-text" style="margin-left: 1rem; margin-right: 1rem;">&nbsp;<i onclick="recycle();" style="color: green;" class="fa fa-recycle" aria-hidden="true"></i></span>
       <% end %>
     <% else %>

@@ -56,7 +56,7 @@ module Workshopper
       end
 
       if params[:userid] && params[:userid].downcase == "reset"
-        session[:userid] = params[:userid] = ''
+        session[:userid] = params[:userid] = session[:guid] = params[:guid] = ''
       end
 
       if (session[:userid] && session[:userid].strip != '') || (params[:userid] && params[:userid].strip != '')
@@ -67,7 +67,18 @@ module Workshopper
         end
         env['USER_ID'] = session[:userid].strip
       else
-        env['USER_ID'] = 'PLEASE ENTER USERID AT TOP OF PAGE'
+        env['USER_ID'] = 'PLEASE ENTER USERID AND GUID AT TOP OF PAGE'
+      end
+
+      if (session[:guid] && session[:guid].strip != '') || (params[:guid] && params[:guid].strip != '')
+        if (params[:guid] && params[:guid].strip != '') && (!session[:guid] || session[:guid].strip == '')
+          session[:guid] = params[:guid].strip
+        elsif (params[:guid] && params[:guid].strip != '') && (session[:guid] && session[:guid].strip != '')
+          session[:guid] = params[:guid].strip
+        end
+        env['GUID'] = session[:guid].strip
+      else
+        env['GUID'] = 'PLEASE ENTER USERID AND GUID AT TOP OF PAGE'
       end
 
       if ENV['DYNAMIC_USER_NAME']
